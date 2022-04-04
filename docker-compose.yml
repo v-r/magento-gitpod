@@ -1,22 +1,30 @@
 version: '3.8'
-
+volumes:
+  appdata:
+    name: appdata
+  bashhistory:
+    name: bashhistory
+  dbdata:
+    name: dbdata
+  esdata:
+    name: esdata
+  redis:
+    name: redis
+  sshdirectory:
+    name: sshdirectory
+  tmp-dbdata:
+    name: tmp-dbdata
+    driver_opts:
+      device: tmpfs
+      type: tmpfs
 services:
   redis:
-    hostname: redis
-    image: docker.io/wardenenv/redis:5.0
-    networks:
-      default: null
     ports:
-    - mode: ingress
-      target: 6379
-      published: "36379"
-      protocol: tcp
-    volumes:
-    - type: volume
-      source: redis
-      target: /data
-      volume: {}
+      - "6379:6379"
+    image: docker.io/wardenenv/redis:5.0
   db:
+    ports:
+      - "3306:3306"
     command:
     - mysqld
     - --max_allowed_packet=1024M
@@ -26,40 +34,24 @@ services:
       MYSQL_PASSWORD: magento
       MYSQL_ROOT_PASSWORD: magento
       MYSQL_USER: magento
-    hostname: selver-mariadb
     image: docker.io/wardenenv/mariadb:10.3
-    networks:
-      default: null
     volumes:
     - type: volume
       source: dbdata
       target: /var/lib/mysql
-      volume: {}
   elasticsearch:
+    ports:
+      - "9200:9200"
     environment:
       discovery.type: single-node
       xpack.security.enabled: "false"
-    hostname: selver-elasticsearch
     image: docker.io/wardenenv/elasticsearch:7.9
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.selver-elasticsearch.rule: Host(`elasticsearch.selver.test`)
-      traefik.http.routers.selver-elasticsearch.tls: "true"
-      traefik.http.services.selver-elasticsearch.loadbalancer.server.port: "9200"
-    networks:
-      default: null
     volumes:
     - type: volume
       source: esdata
       target: /usr/share/elasticsearch/data
       volume: {}
   elasticsearch-hq:
-    hostname: selver-elasticsearch-hq
     image: elastichq/elasticsearch-hq:latest
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.selver-elasticsearch-hq.rule: Host(`elastichq.selver.test`)
-      traefik.http.routers.selver-elasticsearch-hq.tls: "true"
-      traefik.http.services.selver-elasticsearch-hq.loadbalancer.server.port: "5000"
-    networks:
-      default: null
+    ports:
+      - "9300:9300"
