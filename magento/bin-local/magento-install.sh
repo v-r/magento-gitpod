@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+bin/magento setup:install \
+    --admin-user=admin \
+    --admin-password=test123 \
+    --admin-email=test@test.ee \
+    --admin-firstname=Admin \
+    --admin-lastname=Admin \
+    --backend-frontname=backend \
+    --db-host=127.0.0.1 \
+    --db-name=magento \
+    --db-user=magento \
+    --db-password=magento \
+    --search-engine=elasticsearch7 \
+    --elasticsearch-host=localhost \
+    --elasticsearch-port=9200 \
+    --elasticsearch-index-prefix=magento2 \
+    --elasticsearch-enable-auth=0 \
+    --elasticsearch-timeout=15 \
+    --http-cache-hosts=varnish:80 \
+    --session-save=redis \
+    --session-save-redis-host=localhost \
+    --session-save-redis-port=6379 \
+    --session-save-redis-db=2 \
+    --session-save-redis-max-concurrency=20 \
+    --cache-backend=redis \
+    --cache-backend-redis-server=localhost \
+    --cache-backend-redis-db=0 \
+    --cache-backend-redis-port=6379 \
+    --page-cache=redis \
+    --page-cache-redis-server=localhost \
+    --page-cache-redis-db=1 \
+    --page-cache-redis-port=6379 \
+    --cleanup-database
