@@ -2,6 +2,7 @@ tasks:
   - init: |
       docker-compose pull
   - command: |
+      sudo apt update -y && sudo apt install php7.4-soap
       docker-compose up
 ports:
   - port: 9200
