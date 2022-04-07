@@ -1,0 +1,31 @@
+- name: Magento 2 actions
+  # You may pin to the exact commit or the version.
+  # uses: MAD-I-T/magento-actions@1ad6c6c3ffb66af8b9e6ac8cd0203119e74353a4
+  uses: MAD-I-T/magento-actions@v3.10
+  with:
+    # version of php to use 7.1, 7.2 or 7.4
+    php: # optional, default is auto
+    # Possible values: build, static-test, integration-test, unit-test, phpcs-test, deploy-staging, deploy-production, cleanup-staging, cleanup-production, security-scan-[files|modules]
+    process: # optional, default is build
+    # override config and scripts dirs with your own setup/config, must respect default scalfolding 1 or 0
+    override_settings: # optional, default is 0
+    # your src is using elasticsuite?  1 or 0
+    elasticsuite: # optional, default is 0
+    # your src is using elasticsearch?  1 or 0
+    elasticsearch: # optional, default is 0
+    # phpcs check on a Magento module or code base. Possible values, Vendor, Vendor/MyModule or dir path using github repository scaffolding
+    extension: # optional, default is 
+    # MEQP magento coding standard severity check
+    severity: # optional, default is 1
+    # Magento2, PSR2, PSR1, PSR12 etc... see magento-coding-standard
+    standard: # optional, default is Magento2
+    # deployer-php custom configs. Possible values, no-permission-check (there will be no permission check of writable dirs)
+    deployer: # optional, default is default
+    # force composer version. Possible values 1 or 2
+    composer_version: # optional, default is 0
+    # the magento version to install i.e 2.4.1
+    magento_version: # optional, default is 0
+    # List of modules to be disabled during install, comma separated e.g: Magento_Sales,Magento_Config
+    disable_modules: # optional, default is 
+    # do not push magento source code to github repo values 0|1
+    no_push: # optional, default is 0
