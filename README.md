@@ -1,1 +1,1 @@
-# magento-gitpod
+# Magento gitpod based dev. environment
